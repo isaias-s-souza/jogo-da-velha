@@ -4,7 +4,7 @@ from dao import Conexao
 import os
 CAMINHO_PROJETO = os.getcwd()
 
-bancodedados = CAMINHO_PROJETO + '\\Projeto jogo da velha\\jogos.db'
+bancodedados = CAMINHO_PROJETO + '\\jogos.db'
 conexao = Conexao(bancodedados)
 conexao.CriarTabela()
 
