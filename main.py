@@ -20,17 +20,11 @@ def novo_jogo():
                                 'VALORPOSICAO, FINALIZADO) VALUES (?, ?, ?, ?, ?); '
     jogoInicial =   [ 
                         (numeroNovoJogo[0][0], 0, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 0, '', 0), 
                         (numeroNovoJogo[0][0], 0, 1, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 2, '', 0),
+                        (numeroNovoJogo[0][0], 0, 2, '', 0), 
                         (numeroNovoJogo[0][0], 1, 0, '', 0), 
                         (numeroNovoJogo[0][0], 1, 1, '', 0), 
-                        (numeroNovoJogo[0][0], 1, 2, '', 0),
+                        (numeroNovoJogo[0][0], 1, 2, '', 0), 
                         (numeroNovoJogo[0][0], 2, 0, '', 0), 
                         (numeroNovoJogo[0][0], 2, 1, '', 0), 
                         (numeroNovoJogo[0][0], 2, 2, '', 0)
@@ -50,14 +44,14 @@ def jogar():
     posicaocoluna       = str(request.form['jogada'])[1:]
     numeroJogo          = request.form['numeroJogo']
 
-    scriptVerificaValidadeJogada =  "SELECT COUNT(ID) FROM JOGO " + \
+    scriptVerificaValidadeJogada =  "SELECT VALORPOSICAO FROM JOGO " + \
                                     "WHERE POSICAOLINHA = ? AND POSICAOCOLUNA = ? AND " + \
                                     "NUMEROJOGO = ?"
     jaTemJogadaNaPosicao = conexao.SelecionaDados(scriptVerificaValidadeJogada, (posicaolinha, posicaocoluna, numeroJogo))   
 
-    if jaTemJogadaNaPosicao[0][0] != None:
+    if jaTemJogadaNaPosicao[0][0] != '':
         flash("Jogada não permitida, essa posição já foi usada!")
-        return redirect('/')
+        quit() nao funciona
 
     jogadorDaVez        = request.form['vez']
     scriptNovaJogada    =   "UPDATE JOGO SET VALORPOSICAO = ? " + \
@@ -95,12 +89,10 @@ def jogar():
                             '(SELECT VALORPOSICAO FROM JOGO ' + \
                              'WHERE POSICAOLINHA = 2 AND POSICAOCOLUNA = 2 AND NUMEROJOGO = ?) '
     
-    parametrosNumerodoJogoAtual = ( numeroJogo, numeroJogo, numeroJogo,
-                                    numeroJogo, numeroJogo, numeroJogo,
-                                    numeroJogo, numeroJogo, numeroJogo)
+    parametrosNumerodoJogoAtual = (numeroJogo * 9)
     jogo = conexao.SelecionaDados(scriptResgataDados, parametrosNumerodoJogoAtual)
 
-    return redirect('/jogo.html', jogo=jogo, vez=JogadorProximaVez, numeroJogo=numeroJogo)
+    return render_template('/jogo.html', jogo=jogo, vez=JogadorProximaVez, numeroJogo=numeroJogo)
 
 
 if __name__ == '__main__':
