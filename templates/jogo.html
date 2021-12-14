@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <title>Jogo da Velha com Flask</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
+         rel="stylesheet" 
+         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
+         crossorigin="anonymous">
+    <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet">
+</head>
+<body>
+    <div class="row">
+        <table class="table table-bordered border-primary col-6">
+            <tbody>
+                <tr>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="00">
+                            <button type="submit">
+                                {%if jogo[0][0] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[0][0] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[0][0] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="01">
+                            <button type="submit">
+                                {%if jogo[0][1] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[0][1] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[0][1] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>     
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+                            
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="02">
+                            <button type="submit">
+                                {%if jogo[0][2] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[0][2] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[0][2] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button> 
+                        </form>   
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="10">
+                            <button type="submit">
+                                {%if jogo[1][0] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[1][0] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[1][0] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="11">
+                            <button type="submit">
+                                {%if jogo[1][1] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[1][1] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[1][1] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>     
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="12">
+                            <button type="submit">
+                                {%if jogo[1][2] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[1][2] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[1][2] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>   
+                        </form> 
+                    </td> 
+                </tr>
+                <tr>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+                            
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="20">
+                            <button type="submit">
+                                {%if jogo[2][0] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[2][0] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[2][0] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="21">
+                            <button type="submit">
+                                {%if jogo[2][1] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[2][1] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[2][1] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>    
+                        </form> 
+                    </td>
+                    <td>
+                        <form action="/jogar" method="post">
+                            {%if vez == 'X' %}
+                            <input value="X" type="hidden" name="vez" id="vez">
+                            {%elif vez == 'O' %}
+                            <input value="O" type="hidden" name="vez" id="vez">
+                            {% endif %}
+
+                            <input value= "{{ numeroJogo[0][0]}}"  type="hidden" name="numeroJogo" id="numeroJogo">
+                            <input type="hidden" name="jogada" id="jogada" value="22">
+                            <button type="submit">
+                                {%if jogo[2][2] == '' %} 
+                                <img src="{{url_for('static', filename='images/void.png')}}">
+                                {%elif jogo[2][2] == 'X' %}
+                                <img src="{{url_for('static', filename='images/x.png')}}">
+                                {%elif jogo[2][2] == 'O' %}
+                                <img src="{{url_for('static', filename='images/circle.png')}}">
+                                {% endif %}
+                            </button>   
+                        </form> 
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="container">
+
+        <!-- Indica local onde o restante da página será carregado para cada
+        página que tem como template padrão este arquivo -->
+        {%block conteudo %} {%endblock %}
+        <div class="page-header">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul id="messages" class="list-unstyled">
+                    {% for message in messages %}
+                        <li class="alert alert-success">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>

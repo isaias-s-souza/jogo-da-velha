@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, flash
 from dao import Conexao
 
 import os
@@ -46,12 +46,20 @@ def novo_jogo():
 
 @app.route('/jogar', methods=['POST', ])
 def jogar(): 
-    print(request)
     posicaolinha        = str(request.form['jogada'])[:1]
     posicaocoluna       = str(request.form['jogada'])[1:]
-    jogadorDaVez        = request.form['vez']
     numeroJogo          = request.form['numeroJogo']
 
+    scriptVerificaValidadeJogada =  "SELECT COUNT(ID) FROM JOGO " + \
+                                    "WHERE POSICAOLINHA = ? AND POSICAOCOLUNA = ? AND " + \
+                                    "NUMEROJOGO = ?"
+    jaTemJogadaNaPosicao = conexao.SelecionaDados(scriptVerificaValidadeJogada, (posicaolinha, posicaocoluna, numeroJogo))   
+
+    if jaTemJogadaNaPosicao[0][0] != None:
+        flash("Jogada não permitida, essa posição já foi usada!")
+        return redirect('/')
+
+    jogadorDaVez        = request.form['vez']
     scriptNovaJogada    =   "UPDATE JOGO SET VALORPOSICAO = ? " + \
                             "WHERE POSICAOLINHA = ? AND POSICAOCOLUNA = ? AND " + \
                             "NUMEROJOGO = ?"
@@ -92,7 +100,7 @@ def jogar():
                                     numeroJogo, numeroJogo, numeroJogo)
     jogo = conexao.SelecionaDados(scriptResgataDados, parametrosNumerodoJogoAtual)
 
-    return render_template('/jogo.html', jogo=jogo, vez=JogadorProximaVez, numeroJogo=numeroJogo)
+    return redirect('/jogo.html', jogo=jogo, vez=JogadorProximaVez, numeroJogo=numeroJogo)
 
 
 if __name__ == '__main__':
