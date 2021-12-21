@@ -8,22 +8,8 @@
          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" 
          crossorigin="anonymous">
     <link href="{{url_for('static', filename='style.css')}}" rel="stylesheet">
-    <script>
-        function valida(){
-            valorpreenchimento = document.getElementsByTagName("img").attr("alt");
-            alert(valorpreenchimento)
-            if(valorpreenchimento == "Preenchido")
-            {
-                returnToPreviousPage();
-                return false
-            }
-            else
-                return true;
-        }
-        
-    </script>
 </head>
-<body>
+<body style="background-color: black">
     <div class="row">
         <table class="table table-bordered border-primary col-6">
             <tbody>

@@ -42,21 +42,22 @@ def Carregajogo(numeroJogo):
 def VerificaJogoERetornaVencedor(jogo):
     vencedor = ''
     
-    possibilidadesDeFimDeJogo = []
+    possibilidadesDeFimDeJogo = list()
     #todas possibilidades de fim de jogo
-    possibilidadesDeFimDeJogo.append(set(jogo[0][0], jogo[0][1], jogo[0][2])) #1ª linha
-    possibilidadesDeFimDeJogo.append(set(jogo[1][0], jogo[1][1], jogo[1][2])) #2ª linha
-    possibilidadesDeFimDeJogo.append(set(jogo[2][0], jogo[2][1], jogo[2][2])) #3ª linha
-    possibilidadesDeFimDeJogo.append(set(jogo[0][0], jogo[1][0], jogo[2][0])) #1ª vertical
-    possibilidadesDeFimDeJogo.append(set(jogo[0][1], jogo[1][1], jogo[2][1])) #2ª vertical
-    possibilidadesDeFimDeJogo.append(set(jogo[0][2], jogo[1][2], jogo[2][2])) #3ª vertical
-    possibilidadesDeFimDeJogo.append(set(jogo[0][0], jogo[1][1], jogo[2][2])) #Diagonal principal
-    possibilidadesDeFimDeJogo.append(set(jogo[0][2], jogo[1][1], jogo[2][0])) #Diagonal secundária
+    possibilidadesDeFimDeJogo.append(set([jogo[0][0], jogo[0][1], jogo[0][2]])) #1ª linha
+    possibilidadesDeFimDeJogo.append(set([jogo[1][0], jogo[1][1], jogo[1][2]])) #2ª linha
+    possibilidadesDeFimDeJogo.append(set([jogo[2][0], jogo[2][1], jogo[2][2]])) #3ª linha
+    possibilidadesDeFimDeJogo.append(set([jogo[0][0], jogo[1][0], jogo[2][0]])) #1ª vertical
+    possibilidadesDeFimDeJogo.append(set([jogo[0][1], jogo[1][1], jogo[2][1]])) #2ª vertical
+    possibilidadesDeFimDeJogo.append(set([jogo[0][2], jogo[1][2], jogo[2][2]])) #3ª vertical
+    possibilidadesDeFimDeJogo.append(set([jogo[0][0], jogo[1][1], jogo[2][2]])) #Diagonal principal
+    possibilidadesDeFimDeJogo.append(set([jogo[0][2], jogo[1][1], jogo[2][0]])) #Diagonal secundária
 
     #Verificação de vitória
     for possibilidade in possibilidadesDeFimDeJogo:
-        if len(possibilidade) == 1 and possibilidade[0] != '': # Tem somente um valor dentro do trio analisado e este valor não é campo vazio
-            vencedor = possibilidade[0]
+        poss = possibilidade
+        if (len(possibilidade) == 1) and ('' not in possibilidade): # Tem somente um valor dentro do trio analisado e este valor não é campo vazio
+            vencedor = next(iter(possibilidade)) # recupera primeiro item do set
 
     return vencedor
 
@@ -117,9 +118,7 @@ def jogar():
     jogo        = Carregajogo(numeroJogo)
     vencedor    = VerificaJogoERetornaVencedor(jogo)
     if vencedor != '': #Alguém venceu
-        return render_template('/vencedor.html')    
-
-
+        return render_template('/vencedor.html', vencedor=vencedor)    
 
     #define a próxima jogada
     if jogadorDaVez == 'X':

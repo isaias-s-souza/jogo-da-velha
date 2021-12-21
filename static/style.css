@@ -1,4 +1,10 @@
-img, table
+table
+{
+    display: flex;
+    justify-content: center;
+};
+
+.centralizado 
 {
     display: flex;
     justify-content: center;
