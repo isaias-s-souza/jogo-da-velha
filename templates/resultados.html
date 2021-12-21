@@ -12,25 +12,50 @@
 <body style="background-color: black">
     <div class="container align-middle">
         <div class="row align-items-center justify-content-md-center">
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <h1 class="text-center" style="color: red;"> JOGO DA VELHA</h1>
-            </div>
-        </div>
-        <div class="row align-items-center justify-content-md-center">
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <img class="img-responsive mx-auto d-block" src="{{url_for('static', filename='images/velha.png')}}">
-            </div>
+            <table class="table table-bordered border-primary col-6">
+
+                <tr>
+                    <th>
+                        Nº Jogo
+                    </th>
+                    <th>
+                        Quem ganhou?
+                    </th>
+                    <th>
+                        Nº de jogadas
+                    </th>
+                </tr>
+                {% for jogo in resultadosJogosAnteriores%}
+                <tr>
+                    <td>
+                        {{jogo[0]}}
+                    </td>
+                    <td>
+                        {% if jogo[1] == 'X' %}
+                        <img src="{{url_for('static', filename='images/x_win.png')}}">
+                        {% elif jogo[1] == 'O' %}
+                        <img src="{{url_for('static', filename='images/circle_win.png')}}">
+                        {% elif jogo[1] == 'velha' %}
+                        <img src="{{url_for('static', filename='images/velha_win.png')}}">
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{jogo[2]}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
         <div class="row align-items-center justify-content-md-center">
             <div class="col-md-6 col-sm-6 col-lg-6 text-center">
                 <a type="button" class="btn btn-success" href="/novo_jogo">Novo Jogo</a>
-                <a type="button" class="btn btn-primary" href="/resultados">Resultados
-                    Anteriores</a>
+                <a type="button" class="btn btn-primary" href="/menu">Voltar para o início</a>
             </div>
         </div>
     </div>
 
     <div class="container">
+
         <div class="page-header">
             {% with messages = get_flashed_messages() %}
             {% if messages %}

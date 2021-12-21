@@ -74,11 +74,11 @@ def inicio():
 
 @app.route('/novo_jogo')
 def novo_jogo():
-    scriptVerificacao       = 'SELECT IFNULL(MAX(NUMEROJOGO), 1) + 1 FROM JOGO WHERE ? = ? '   
+    scriptVerificacao       = 'SELECT IFNULL(MAX(NUMEROJOGO), 0) + 1 FROM JOGO WHERE ? = ? '   
 
     numeroNovoJogo          = conexao.SelecionaDados(scriptVerificacao, [1, 1])
-    scriptInsercaoNovoJogo  =   'INSERT INTO JOGO (NUMEROJOGO, POSICAOLINHA, POSICAOCOLUNA, ' + \
-                                'VALORPOSICAO, VENCEDOR) VALUES (?, ?, ?, ?, ?); '
+    scriptInsercaoNovoJogo  = 'INSERT INTO JOGO (NUMEROJOGO, POSICAOLINHA, POSICAOCOLUNA, ' + \
+                              'VALORPOSICAO, VENCEDOR) VALUES (?, ?, ?, ?, ?); '
     jogoInicial =   [ 
                         (numeroNovoJogo[0][0], 0, 0, '', ''), 
                         (numeroNovoJogo[0][0], 0, 1, '', ''), 
@@ -97,7 +97,7 @@ def novo_jogo():
             ]
 
     conexao.InsereDados(scriptInsercaoNovoJogo, jogoInicial)
-    return render_template('/jogo.html', jogo = jogo, vez="X", numeroJogo=numeroNovoJogo)
+    return render_template('/jogo.html', jogo=jogo, vez="X", numeroJogo=numeroNovoJogo)
 
 @app.route('/jogar', methods=['POST', ])
 def jogar(): 
@@ -142,6 +142,16 @@ def jogar():
     elif jogadorDaVez == 'O':
         JogadorProximaVez = 'X'
     return render_template('/jogo.html', jogo=jogo, vez=JogadorProximaVez, numeroJogo=numeroJogo)
+
+@app.route('/resultados')
+def resultados():
+    scriptResultadoJogosAnteriores =    "SELECT NUMEROJOGO, VENCEDOR, SUM(IIF(VALORPOSICAO <> '', 1, 0)) " + \
+                                        "FROM JOGO " + \
+                                        "WHERE ? = ? " + \
+                                        "GROUP BY NUMEROJOGO, VENCEDOR " 
+                                         
+    resultados_anteriores = conexao.SelecionaDados(scriptResultadoJogosAnteriores, [1, 1])
+    return render_template('/resultados.html', resultadosJogosAnteriores=resultados_anteriores)
 
 if __name__ == '__main__':
     app.run(debug = True)
