@@ -14,7 +14,7 @@ class Conexao(object):
                             '"POSICAOLINHA"	    INTEGER, ' + \
                             '"POSICAOCOLUNA"    INTEGER, ' + \
                             '"VALORPOSICAO"	    TEXT, ' + \
-                            '"FINALIZADO"	    INTEGER, ' + \
+                            '"VENCEDOR"	        TEXT, ' + \
                             'PRIMARY KEY("ID" AUTOINCREMENT));'
         cursor.execute(scriptCriacaoTabela)
         conexao.commit()

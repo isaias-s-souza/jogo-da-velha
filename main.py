@@ -54,30 +54,41 @@ def VerificaJogoERetornaVencedor(jogo):
     possibilidadesDeFimDeJogo.append(set([jogo[0][2], jogo[1][1], jogo[2][0]])) #Diagonal secundária
 
     #Verificação de vitória
+    acabouOJogo = True
     for possibilidade in possibilidadesDeFimDeJogo:
-        poss = possibilidade
+        if '' in possibilidade:
+            acabouOJogo = False
+
         if (len(possibilidade) == 1) and ('' not in possibilidade): # Tem somente um valor dentro do trio analisado e este valor não é campo vazio
             vencedor = next(iter(possibilidade)) # recupera primeiro item do set
+
+    #Empatou / Deu velha
+    if vencedor == '' and acabouOJogo == True:
+        vencedor = 'velha'
 
     return vencedor
 
 @app.route('/')
+def inicio():
+    return render_template('menu.html')
+
+@app.route('/novo_jogo')
 def novo_jogo():
-    scriptVerificacao       = 'SELECT IFNULL(MAX(NUMEROJOGO), 1) FROM JOGO WHERE ? = ? '   
+    scriptVerificacao       = 'SELECT IFNULL(MAX(NUMEROJOGO), 1) + 1 FROM JOGO WHERE ? = ? '   
 
     numeroNovoJogo          = conexao.SelecionaDados(scriptVerificacao, [1, 1])
     scriptInsercaoNovoJogo  =   'INSERT INTO JOGO (NUMEROJOGO, POSICAOLINHA, POSICAOCOLUNA, ' + \
-                                'VALORPOSICAO, FINALIZADO) VALUES (?, ?, ?, ?, ?); '
+                                'VALORPOSICAO, VENCEDOR) VALUES (?, ?, ?, ?, ?); '
     jogoInicial =   [ 
-                        (numeroNovoJogo[0][0], 0, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 1, '', 0), 
-                        (numeroNovoJogo[0][0], 0, 2, '', 0), 
-                        (numeroNovoJogo[0][0], 1, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 1, 1, '', 0), 
-                        (numeroNovoJogo[0][0], 1, 2, '', 0), 
-                        (numeroNovoJogo[0][0], 2, 0, '', 0), 
-                        (numeroNovoJogo[0][0], 2, 1, '', 0), 
-                        (numeroNovoJogo[0][0], 2, 2, '', 0)
+                        (numeroNovoJogo[0][0], 0, 0, '', ''), 
+                        (numeroNovoJogo[0][0], 0, 1, '', ''), 
+                        (numeroNovoJogo[0][0], 0, 2, '', ''), 
+                        (numeroNovoJogo[0][0], 1, 0, '', ''), 
+                        (numeroNovoJogo[0][0], 1, 1, '', ''), 
+                        (numeroNovoJogo[0][0], 1, 2, '', ''), 
+                        (numeroNovoJogo[0][0], 2, 0, '', ''), 
+                        (numeroNovoJogo[0][0], 2, 1, '', ''), 
+                        (numeroNovoJogo[0][0], 2, 2, '', '')
                     ]
     jogo = [
                 ('', '', ''),
@@ -118,6 +129,11 @@ def jogar():
     jogo        = Carregajogo(numeroJogo)
     vencedor    = VerificaJogoERetornaVencedor(jogo)
     if vencedor != '': #Alguém venceu
+        scriptFinalizacaoJogo = "UPDATE JOGO SET VENCEDOR = ? " + \
+                                "WHERE NUMEROJOGO = ?"
+        dadosJogoFinalizado = [(vencedor, numeroJogo)]
+        conexao.AtualizaDados(scriptFinalizacaoJogo, dadosJogoFinalizado)
+
         return render_template('/vencedor.html', vencedor=vencedor)    
 
     #define a próxima jogada

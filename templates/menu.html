@@ -11,40 +11,16 @@
 
 <body style="background-color: black">
     <div class="container align-middle">
-        {% if vencedor == 'X' %}
         <div class="row align-items-center justify-content-md-center">
             <div class="col-md-6 col-sm-6 col-lg-6">
-                <h1 class="text-center" style="color: red;">O vencedor é o xizinho !!</h1>
+                <h1 class="text-center" style="color: red;"> JOGO DA VELHA</h1>
             </div>
         </div>
         <div class="row align-items-center justify-content-md-center">
             <div class="col-md-6 col-sm-6 col-lg-6">
-                <img class="img-responsive mx-auto d-block" src="{{url_for('static', filename='images/trofeuX.png')}}">
+                <img class="img-responsive mx-auto d-block" src="{{url_for('static', filename='images/velha.png')}}">
             </div>
         </div>
-        {% elif vencedor == 'O' %}
-        <div class="row align-items-center justify-content-md-center">
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <h1 class="text-center" style="color: blue;">O vencedor é a bolinha !!</h1>
-            </div>
-        </div>
-        <div class="row align-items-center justify-content-md-center">
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <img class="img-responsive mx-auto d-block" src="{{url_for('static', filename='images/trofeuO.png')}}">
-            </div>
-        </div>
-        {% elif vencedor == 'velha' %}
-        <div class="row align-items-center justify-content-md-center">
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <h1 class="text-center" style="color: greenyellow;">Deu Velha !!</h1>
-            </div>
-        </div>
-        <div class="row align-items-center justify-content-md-center">
-            <div class="col-md-6 col-sm-6 col-lg-6">
-                <img class="img-responsive mx-auto d-block" src="{{url_for('static', filename='images/velha_rindo.png')}}">
-            </div>
-        </div>
-        {% endif %}
         <div class="row align-items-center justify-content-md-center">
             <div class="col-md-6 col-sm-6 col-lg-6 text-center">
                 <a type="button" class="btn btn-success" href="/novo_jogo">Novo Jogo</a>
