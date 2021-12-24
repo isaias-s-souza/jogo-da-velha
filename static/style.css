@@ -4,8 +4,8 @@ table
     justify-content: center;
 };
 
-.centralizado 
+th, td
 {
-    display: flex;
-    justify-content: center;
+    color: cyan;  
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;  
 }
